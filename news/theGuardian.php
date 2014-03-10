@@ -26,16 +26,16 @@ class theGuardianResult {
 	}
 	public function castToNewsResult() {
 		$result = new NewsResult;
-		$result->title = $this->webTitle;
+		$result->title = mb_convert_encoding( $this->webTitle, "HTML-ENTITIES", "UTF-8" );
 		$result->short = NULL;
 		$result->image = NULL;
 		$result->date = $this->webPublicationDate;
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
-		$result->newsCategory = $this->sectionName;
+		$result->newsCategory = mb_convert_encoding( $this->sectionName, "HTML-ENTITIES", "UTF-8" );
 		$result->website = "The Guardian";
-		$result->webUrl = $this->webUrl;
-		$result->apiUrl = $this->apiUrl;
+		$result->webUrl = mb_convert_encoding( $this->webUrl, "HTML-ENTITIES", "UTF-8" );
+		$result->apiUrl = mb_convert_encoding( $this->apiUrl, "HTML-ENTITIES", "UTF-8" );
 		// temp
 		$result->relevance = rand(1,100);
 		return $result;

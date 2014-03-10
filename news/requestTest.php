@@ -17,7 +17,9 @@
 			foreach ( $results as $result ) {
 				echo "<h3>" . $result->title . "</h3>";
 				echo "<p>" . $result->short . "</p>";
-				echo "<p>" . $result->website . "</p>";
+				if( $result->image !== NULL )
+					echo "<img src=\"" . $result->image . "\">";
+				echo "<p><a href=\"" . $result->webUrl . "\">" . $result->website . "</a></p>";
 			}
 		?>
 	</div>

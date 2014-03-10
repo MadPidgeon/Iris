@@ -7,6 +7,7 @@ function getJson( $url ) {
 	curl_setopt( $ch, CURLOPT_POST, 0 );
 	$json = curl_exec( $ch );
 	curl_close( $ch );
+	$json = mb_convert_encoding( $json, "HTML-ENTITIES", "UTF-8" );
 	return $json;
 }
 

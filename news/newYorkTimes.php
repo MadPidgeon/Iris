@@ -14,7 +14,6 @@ class newYorkTimesResult {
 		$headline,
 		$section_name,
 		$image,
-		$image_thumbnail,
 		$date;
 	function __construct( $jsonData ) {
 		$this->jsonDeserialize( $jsonData );
@@ -28,26 +27,20 @@ class newYorkTimesResult {
 		$this->source = $jsonData['source'];
 		$this->headline = $jsonData['headline']['main'];
 		$this->section_name = $jsonData['section_name'];
-		if( array_key_exists('multimedia', $jsonData ) and array_key_exists( 0, $jsonData['multimedia'] ) ) {
-			if( array_key_exists('url', $jsonData['multimedia'][0] ) )
-				$this->image = $jsonData['multimedia'][0]['url'];
-			if( array_key_exists('legacy', $jsonData['multimedia'][0] ) and array_key_exists('thumbnail', $jsonData['multimedia'][0]['legacy'] ) )
-				$this->image_thumbnail = $jsonData['multimedia'][0]['legacy']['thumbnail'];
-		}
+		if( array_key_exists('multimedia', $jsonData ) and array_key_exists( 0, $jsonData['multimedia'] ) and array_key_exists('url', $jsonData['multimedia'][0] ) )
+			$this->image = $jsonData['multimedia'][0]['url'];
 		$this->date = $jsonData['pub_date'];
 	}
 	public function castToNewsResult() {
 		$result = new NewsResult;
-		$result->title = $this->headline;
-		$result->short = $this->snippet;
-		if( $this->image_thumbnail !== NULL )
-			$result->image = $this->image_thumbnail;
-		else
-			$result->image = $this->image;
+		$result->title = mb_convert_encoding( $this->headline, "HTML-ENTITIES", "UTF-8" );
+		$result->short = mb_convert_encoding( $this->snippet, "HTML-ENTITIES", "UTF-8" );
+		if( $this->image !== NULL )
+			$result->image = "http://graphics.nytimes.com/" . $this->image;
 		$result->date = $this->date;
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
-		$result->newsCategory = $this->section_name;
+		$result->newsCategory = mb_convert_encoding( $this->section_name, "HTML-ENTITIES", "UTF-8" );
 		$result->website = $this->source;
 		$result->webUrl = $this->web_url;
 		$result->apiUrl = NULL;
