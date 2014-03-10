@@ -11,10 +11,10 @@ class NewsResult {
 		$newsCategory,
 		$website,
 		$webUrl,
-		$apiUrl;
+		$apiUrl,
 		$relevance;
 	public function jsonSerialize() {
-		$result = [
+		$result = array(
 			'title' => $this->title,
 			'short' => $this->short,
 			'image' => $this->image,
@@ -26,7 +26,7 @@ class NewsResult {
 			'webUrl' => $this->webUrl,
 			'apiUrl' => $this->apiUrl,
 			'relevance' => $this->relevance
-		];
+		);
 		return $result;
 	}
 }
