@@ -44,6 +44,8 @@ function usaTodaySearch( $requestObject ) {
 	$json = getJson( $requestUrl ); 
 	$decoded = json_decode( $json, true );
 	$classArray = array(); 
+	if( !is_array($decoded) or !array_key_exists( 'stories', $decoded ) )
+		return $classArray;
 	foreach ( $decoded['stories'] as $usaTodayNews ) {
 		$usaToday = new usaTodayResult( $usaTodayNews );
 		$classArray[] = $usaToday->castToNewsResult();

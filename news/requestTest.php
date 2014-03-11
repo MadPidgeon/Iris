@@ -10,7 +10,7 @@
 			include_once( "newsRequest.php" );
 
 			$requestObject = new searchRequest;
-			$requestObject->addParameter( "Russia" );
+			$requestObject->addParameter( "Ukraine" );
 
 			$results = postRequest( $requestObject );
 
