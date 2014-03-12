@@ -210,6 +210,28 @@
     sigma.canvas.nodes.goo = function(node, ctx, settings) {
       var prefix = settings('prefix') || '';
 
+
+      /* Blue Eye Gradient
+      var grd=ctx.createRadialGradient(node[prefix + 'x'],node[prefix + 'y'],0,node[prefix + 'x'],node[prefix + 'y'],3*node[prefix + 'size']);
+      grd.addColorStop(0,"blue");
+      grd.addColorStop(1,"transparent");
+
+      // Fill with gradient
+      ctx.fillStyle=grd;
+
+      ctx.beginPath();
+      ctx.arc(
+        node[prefix + 'x'],
+        node[prefix + 'y'],
+        3*node[prefix + 'size'],
+        0,
+        Math.PI * 2,
+        true
+      );
+      ctx.closePath();
+      ctx.fill();
+      */
+
       ctx.fillStyle = node.color || settings('defaultNodeColor');
       ctx.beginPath();
       ctx.arc(
@@ -315,6 +337,89 @@
     }
   }
 
+  var cache = function() {
+    var history;
+
+    Object.defineProperty(this, 'history', {
+      value: [],
+      writable: true
+    });
+
+  }
+
+  cache.prototype.add = function(nodes) {
+    if(this.search(nodes[0].label) === false) {
+        var item = {
+        'topic' : nodes[0].label,
+        'nodes' : []
+      };
+      for(var i = 1; i < nodes.length; i++){
+        var node = nodes[i];
+        item.nodes.push({
+          'id' : node.id.replace('n', ''),
+          'title' : node.label,
+          'weight' : node.size
+        });
+      }
+      this.history.push(item);
+    }
+    
+  }
+
+  cache.prototype.search = function(topic){
+    for (var i = 0; i < this.history.length; i++) {
+      if(this.history[i].topic == topic)
+        return this.history[i].nodes;
+    };
+    return false;
+  }
+
+  function drawResults(terms) {
+    var results = Math.min(terms.length, numResults);
+    for( var i = 0; i < results ; ++i ){
+      s.graph.addNode({
+        id: 'n'+terms[i].id,
+        label: terms[i].title,
+        x: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.sin( 2 * Math.PI / results * i ),
+        y: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.cos( 2 * Math.PI / results * i ),
+        size: terms[i].weight,
+        color: '#BBB',
+        type: 'rel'
+      })
+      .addEdge({
+        id: 'e'+i,
+        source: 'm',
+        target: 'n'+terms[i].id,
+        color: '#00f',
+        type: 'goo'
+      });
+
+    }
+
+    // Finally, let's ask our sigma instance to refresh:
+    s.refresh(); 
+
+    s.unbind('clickNode');
+
+    // Bind the events:
+    s.bind('clickNode', function(e) {
+      //console.log(e.data.node.label);
+      if(e.data.node.type == 'rel'){
+        c.add(e.data.node.label);
+        c.refresh();
+        drawGraph(e.data.node.label);
+      }
+      else
+        window.open('http://en.wikipedia.org/wiki/'+e.data.node.label.replace(/\ /g,'_'));
+    });
+
+    h.add(s.graph.nodes());
+
+    //console.log(s.graph.nodes());
+
+    $('#container').removeClass('csspinner').removeClass('traditional');
+  }
+
   var s;
   function drawGraph(topic) {
 
@@ -336,55 +441,27 @@
     // Finally, let's ask our sigma instance to refresh:
     s.refresh();
 
-    var terms = [];
-    $.getJSON('http://newsbyiris.com/sigmajs/wikiMinerApiProxy.php?q='+topic, function(terms, textStatus) {
-      
-      var results = Math.min(terms.length, numResults);
-      for( var i = 0; i < results ; ++i ){
-        s.graph.addNode({
-          id: 'n'+terms[i].id,
-          label: terms[i].title,
-          x: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.sin( 2 * Math.PI / results * i ),
-          y: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.cos( 2 * Math.PI / results * i ),
-          size: terms[i].weight,
-          color: '#BBB',
-          type: 'rel'
-        })
-        .addEdge({
-          id: 'e'+i,
-          source: 'm',
-          target: 'n'+terms[i].id,
-          color: '#00f',
-          type: 'goo'
-        });
-
-      }
-
-      // Finally, let's ask our sigma instance to refresh:
-      s.refresh(); 
-
-      s.unbind('clickNode');
-
-      // Bind the events:
-      s.bind('clickNode', function(e) {
-        //console.log(e.data.node.label);
-        if(e.data.node.type == 'rel'){
-          c.add(e.data.node.label);
-          c.refresh();
-          drawGraph(e.data.node.label);
-        }
-        else
-          window.open('http://en.wikipedia.org/wiki/'+e.data.node.label.replace(/\ /g,'_'));
+    console.log('search', h.search(topic));
+    var terms = h.search(topic);
+    if(terms !== false) {
+      drawResults(terms);
+    }
+    else {
+      var terms = [];
+      $.getJSON('http://newsbyiris.com/sigmajs/wikiMinerApiProxy.php?q='+topic, function(terms, textStatus) {
+        drawResults(terms);
       });
+    }
 
-      $('#container').removeClass('csspinner').removeClass('traditional');
-    });
+    
 
   }
 
   var c;
-
+  var h;
   $(document).ready(function($) {
+
+    h = new cache();
 
     c = new breadcrumbs();
     c.refresh();
@@ -407,7 +484,6 @@
     
 
     $('#searchSubmit').click(function(event) {
-      console.log('test2');
       var value = $('#searchInput').val();
 
       if(value != ''){
