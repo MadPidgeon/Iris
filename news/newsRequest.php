@@ -3,6 +3,7 @@
 include_once( "theGuardian.php" );
 include_once( "newYorkTimes.php" );
 include_once( "usaToday.php" );
+include_once( "googleNews.php" );
 
 class SearchParameter {
 	public
@@ -33,7 +34,8 @@ function postRequest( $requestObject ) {
 	$theGuardian = theGuardianSearch( $requestObject );
 	$nyTimes = newYorkTimesSearch( $requestObject );
 	$usaToday = usaTodaySearch( $requestObject );
-	$result = array_merge( $theGuardian, $nyTimes, $usaToday );
+	$googleNews = googleNewsSearch( $requestObject );
+	$result = array_merge( $theGuardian, $nyTimes, $usaToday, $googleNews );
 	usort( $result, "NewsResultCompare" );
 	return $result;
 }
