@@ -1,4 +1,63 @@
+/* Base */
 body {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 }
+
+#news {
+	float: left;
+	height: 100%;
+	width: 25%;
+	background: #f00;
+	overflow-y: scroll;
+}
+
+#graph {
+	float: left;
+	height: 100%;
+	width: 60%;
+	background: #0f0;
+}
+
+#comments {
+	float: left;
+	height: 100%;
+	width: 15%;
+	background: #00f;
+}
+
+/* News */
+.newsItem {
+	float: left;
+	height: 88px;
+	background: #B0B0B0;
+	padding:0 2 0 2;
+	font-family: "Verdana", "Arial", "serif";
+}
+
+.newsTitle {
+	float: left;
+	height: 20px;
+	font-family: "Verdana", "Arial", "serif";
+	font-size: 12pt;
+	font-weight: bold; 
+}
+
+.newsContent {
+	float: left;
+	height: 68px;
+	font-family: "Verdana", "Arial", "serif";
+	font-size: 8pt;
+	font-weight: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+
+.newsImage {
+	float: left;
+	width: 68px;
+	height: 68px;
+}
+/* Graph */
+
+/* Comment */
