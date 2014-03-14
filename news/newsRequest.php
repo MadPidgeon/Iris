@@ -5,7 +5,7 @@ include_once( "newYorkTimes.php" );
 include_once( "usaToday.php" );
 include_once( "googleNews.php" );
 
-class SearchParameter {
+class searchParameter {
 	public
 		$string,
 		$priority;
@@ -15,7 +15,7 @@ class SearchParameter {
 	}
 }
 
-class SearchRequest {
+class searchRequest {
 	public 
 		$parameters,
 		$wikiPortal,
@@ -24,20 +24,20 @@ class SearchRequest {
 		$this->parameters = array();
 	}
 	public function addParameter( $string, $priority = 100 ) {
-		$this->parameters[] = new SearchParameter( $string, $priority );
+		$this->parameters[] = new searchParameter( $string, $priority );
 	}
 }
 
-function postRequest( $requestObject ) {
+function postRequest( $requestObject, $numberOfResults ) {
 	if( count( $requestObject->parameters ) == 0 )
 		return array();
 	$theGuardian = theGuardianSearch( $requestObject );
 	$nyTimes = newYorkTimesSearch( $requestObject );
 	$usaToday = usaTodaySearch( $requestObject );
 	$googleNews = googleNewsSearch( $requestObject );
-	$result = array_merge( $theGuardian, $nyTimes, $usaToday, $googleNews );
+	$result =  array_merge( $theGuardian, $nyTimes, $usaToday, $googleNews );
 	usort( $result, "NewsResultCompare" );
-	return $result;
+	return array_slice( $result, 0, $numberOfResults, true );
 }
 
 ?>

@@ -23,9 +23,14 @@ class googleNewsResult {
 		$this->url = $xml->link->__toString();
 
 		$descString = $xml->description->__toString();
-		$start = strpos( $descString, '"', strpos( $descString, '<img' ) ) ;
-		$end = strpos( $descString, '"', $start + 1 );
-		$this->image = substr( $descString, $start + 1, $end - $start );
+		$imagePos = strpos( $descString, '<img' );
+		if( $imagePos !== FALSE ) {
+			$start = strpos( $descString, 'src="', $imagePos );
+			if( $start !== FALSE ) {
+				$end = strpos( $descString, '"', $start + 5 );
+				$this->image = substr( $descString, $start + 5, $end - $start - 5 );
+			}
+		}
 
 		$matches = array();
 		$start = strpos( $descString, '<br', strpos( $descString, '<br', strpos( $descString, '<br', strpos( $descString, 'td>' ) ) + 1 ) + 1 );

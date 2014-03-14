@@ -8,7 +8,6 @@ body {
 	float: left;
 	height: 100%;
 	width: 25%;
-	background: #f00;
 	overflow-y: scroll;
 }
 
@@ -29,25 +28,45 @@ body {
 /* News */
 .newsItem {
 	float: left;
-	height: 88px;
-	background: #B0B0B0;
-	padding:0 2 0 2;
-	font-family: "Verdana", "Arial", "serif";
+	width: 100%;
+	padding: 0 2 0 2;
+	font-family: "Verdana", "Arial", "sans-serif";
+	border-bottom: solid 3px #000;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+ 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+ 	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.newsItem.newsLarge {
+	height: 102px;
+}
+
+.newsItem.newsSmall {
+	height: 48px;
 }
 
 .newsTitle {
 	float: left;
-	height: 20px;
-	font-family: "Verdana", "Arial", "serif";
-	font-size: 12pt;
+	width: 100%;
+	letter-spacing: 0px;
+	font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif";
+	font-size: 10pt;
 	font-weight: bold; 
 }
 
-.newsContent {
+.newsTitle.newsLarge {
+	height: 32px;
+}
+
+.newsTitle.newsSmall {
+	height: 16px;
+}
+
+.newsShort {
 	float: left;
-	height: 68px;
-	font-family: "Verdana", "Arial", "serif";
-	font-size: 8pt;
+	/*height: 68px;*/
+	font-family: "Verdana", "Arial", "sans-serif";
+	font-size: 7pt;
 	font-weight: normal;
 	word-wrap: break-word;
 	overflow: hidden;
@@ -58,6 +77,18 @@ body {
 	width: 68px;
 	height: 68px;
 }
+
+.lengthTest {
+	position: absolute;
+	float: left; 
+	visibility: hidden;
+	width: 25%;
+	padding-right: 16px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+ 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+ 	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
 /* Graph */
 
 /* Comment */

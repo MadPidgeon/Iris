@@ -1,6 +1,6 @@
 <?php
 
-class NewsResult {
+class newsResult {
 	public
 		$title,
 		$short,
@@ -31,7 +31,7 @@ class NewsResult {
 	}
 }
 
-function NewsResultCompare( $a, $b ) {
+function newsResultCompare( $a, $b ) {
 	return $a->relevance > $b->relevance;
 }
 
