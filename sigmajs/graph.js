@@ -405,6 +405,7 @@
     s.bind('clickNode', function(e) {
       //console.log(e.data.node.label);
       if(e.data.node.type == 'rel'){
+
         c.add(e.data.node.label);
         c.refresh();
         drawGraph(e.data.node.label);
@@ -422,6 +423,8 @@
 
   var s;
   function drawGraph(topic) {
+
+    updateNews( Array(topic), undefined, 40, Math.floor( Math.random() * 14 ) ); 
 
     $('#container').addClass('csspinner').addClass('traditional');
 

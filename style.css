@@ -2,6 +2,7 @@
 body {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
+	overflow-y: hidden;
 }
 
 #news {
@@ -15,7 +16,7 @@ body {
 	float: left;
 	height: 100%;
 	width: 60%;
-	background: #0f0;
+	background: #eee;
 }
 
 #comments {
@@ -25,24 +26,48 @@ body {
 	background: #00f;
 }
 
+#newsContent {
+	height: 100%;
+}
+
 /* News */
 .newsItem {
 	float: left;
 	width: 100%;
-	padding: 0 2 0 2;
-	font-family: "Verdana", "Arial", "sans-serif";
+	padding: 0 2px 4px 2px;
+	font-family: "Arial", "sans-serif";
 	border-bottom: solid 3px #000;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
  	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
  	box-sizing: border-box;         /* Opera/IE 8+ */
+
+ 	-webkit-transition: background 0s linear;
+    -moz-transition: background 0s linear;
+    -ms-transition: background 0s linear;
+    -o-transition: background 0s linear;
+    transition: background 0s linear;
+}
+
+.newsItem:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	/*cursor: pointer;*/
+	-webkit-transition: background 0.35s linear;
+    -moz-transition: background 0.35s linear;
+    -ms-transition: background 0.35s linear;
+    -o-transition: background 0.35s linear;
+    transition: background 0.35s linear;
+}
+
+.newsItem a {
+	color: #111;
 }
 
 .newsItem.newsLarge {
-	height: 102px;
+	/*height: 102px;*/
 }
 
 .newsItem.newsSmall {
-	height: 48px;
+	/*height: 48px;*/
 }
 
 .newsTitle {
@@ -50,23 +75,27 @@ body {
 	width: 100%;
 	letter-spacing: 0px;
 	font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif";
-	font-size: 10pt;
+	font-size: 20px;
 	font-weight: bold; 
 }
 
+.newsTitle a {
+	text-decoration: none;
+}
+
 .newsTitle.newsLarge {
-	height: 32px;
+	/*height: 32px;*/
 }
 
 .newsTitle.newsSmall {
-	height: 16px;
+	/*height: 16px;*/
 }
 
 .newsShort {
 	float: left;
 	/*height: 68px;*/
-	font-family: "Verdana", "Arial", "sans-serif";
-	font-size: 7pt;
+	font-family: "Arial", "sans-serif";
+	font-size: 15px;
 	font-weight: normal;
 	word-wrap: break-word;
 	overflow: hidden;

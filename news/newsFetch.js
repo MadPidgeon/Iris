@@ -11,7 +11,7 @@ function getTitleHeight( str ) {
 function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, newsCategory, website, webUrl, apiUrl, relevance ) {
 	// Generate content
 	if( website != undefined && website != "" )
-		contentString = "<a href=\"" + webUrl + "\"><b>" + website + "</b></a> ";
+		contentString = "<a href=\"" + webUrl + "\" target=\"_blank\" ><b>" + website + "</b></a> ";
 	if( content != undefined )
 		contentString += content;
 
@@ -23,9 +23,11 @@ function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, news
 		divSize = 1;
 
 	// Create divs
-	divString = "<div class=\"bgcolor1 newsItem " + ( divSize ? "newsLarge" : "newsSmall"  ) + "\">";
-	divString += "<div class=\"txcolor1 newsTitle " + ( titleHeight > 20 ? "newsLarge" : "newsSmall" ) + "\">"
+	divString = "<div class=\" newsItem " + ( divSize ? "newsLarge" : "newsSmall"  ) + "\">";
+	divString += "<div class=\"txcolor1 newsTitle " + ( titleHeight > 20 ? "newsLarge" : "newsSmall" ) + "\">";
+	divString += "<a href=\""+webUrl+"\" target=\"_blank\" >";
 	divString += title;
+	divString += "</a>";
 	divString += "</div><div class=\"txcolor2 newsShort\">";
 	if( image != undefined && image != "" )
 		divString += "<div class=\"newsImage\"><img src=\"" + encodeURI( image ) + "\" width=\"64\" height=\"64\"/></div>";
@@ -35,6 +37,9 @@ function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, news
 }
 
 function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) {
+	$('#newsContent').addClass('csspinner').addClass('traditional');
+
+
 	// Validate input
 	if( numberOfResults == undefined )
 		numberOfResults = 10;
@@ -69,12 +74,14 @@ function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) 
 
 		// Update colors
 		setColors( newColors );
+		$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	}).fail(function(jqXHR, status, error) {
     	if(status == 'parseerror'){
         	addNewsDiv( "Error", "JSON parse error!" );
     	} else {
         	addNewsDiv( "Error", "JQuery error!" );
     	}
+    	$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	});
 }
 
