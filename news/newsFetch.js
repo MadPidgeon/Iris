@@ -62,15 +62,11 @@ function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) 
 		console.log( data );
 
 		// Handle fetched data
-		if( data.length == numberOfResults ) {
-			for( i = 0; i < numberOfResults; i += 1 ) {
+			for( i = 0; i < Math.min(numberOfResults, data.length); i += 1 ) {
 				addNewsDiv( data[i].title, data[i].short, data[i].image, data[i].date, 
 					data[i].wikiPortal, data[i].wikiCategory, data[i].newsCategory, 
 					data[i].website, data[i].webUrl, data[i].apiUrl, data[i].relevance );
 			}
-		} else {
-			addNewsDiv( "Error", "Illegal data!" );
-		}
 
 		// Update colors
 		setColors( newColors );
