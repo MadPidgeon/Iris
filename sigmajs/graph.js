@@ -134,7 +134,7 @@
         settings('labelSizeRatio') * size;
 
       context.font = (settings('fontStyle') ? settings('fontStyle') + ' ' : '') +
-        (fontSize*2) + 'px ' + settings('font');
+        (fontSize*1.8) + 'px ' + settings('font');
       context.fillStyle = '#000';
 
       /*(settings('labelColor') === 'node') ?
@@ -452,13 +452,52 @@
     else {
       var terms = [];
       $.getJSON('http://newsbyiris.com/sigmajs/wikiMinerApiProxy.php?q='+topic, function(terms, textStatus) {
-        drawResults(terms);
+        if(terms.errorCode == 1) {
+          message('Geen resultaten voor deze zoekterm gevonden');
+          $('#container').removeClass('csspinner').removeClass('traditional');
+        }
+        else
+          drawResults(terms);
       });
     }
 
     
 
   }
+
+  function submitSearch() {
+    var value = $('#searchInput').val();
+
+    if(value != ''){
+      c.clear();
+      c.add(value);
+      c.refresh();
+      drawGraph(value);
+    }
+      
+  }
+
+  var fxque;
+  var messageFadeTime;
+  function message(msg, type){
+
+    clearTimeout(messageFadeTime);
+    $("#message").stop(true, true).show();
+    $("#message").text(msg);
+
+    messageFadeTime = setTimeout(function() {
+          $("#message").stop(true, true).fadeOut(1500);
+      }, 2000);
+
+  }
+
+  function updatePlacement() {
+    var myWidth = $(window).width();
+    var messageWindow = 0.25*myWidth + (0.6*myWidth / 2 - 300);
+    $('#message').css('left', messageWindow);
+  }
+
+  window.onresize = updatePlacement;
 
   var c;
   var h;
@@ -485,24 +524,17 @@
       drawGraph(getUrlVars().q);
     }
     
-
-    $('#searchSubmit').click(function(event) {
-      var value = $('#searchInput').val();
-
-      if(value != ''){
-        c.clear();
-        c.add(value);
-        c.refresh();
-        drawGraph(value);
-      }
-
-      
+    $('#searchInput').keyup(function (e) {
+        if (e.keyCode == 13) {
+          submitSearch();
+        }
     });
 
-    //c.click(1);
 
+
+    $('#searchSubmit').click(submitSearch);
+
+    updatePlacement();
   });
 
-
-    
 })();
