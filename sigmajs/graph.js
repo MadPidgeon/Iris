@@ -424,7 +424,8 @@
   var s;
   function drawGraph(topic) {
 
-    updateNews( Array(topic), undefined, 40, Math.floor( Math.random() * 14 ) ); 
+    updateNews( Array(topic), undefined, 40, Math.floor( Math.random() * 14 ) );
+    updateTwitter( Array(topic), 10 );
 
     $('#container').addClass('csspinner').addClass('traditional');
 
