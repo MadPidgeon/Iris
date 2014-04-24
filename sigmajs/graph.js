@@ -451,7 +451,7 @@
     }
     else {
       var terms = [];
-      $.getJSON('http://newsbyiris.com/sigmajs/wikiMinerApiProxy.php?q='+topic, function(terms, textStatus) {
+      $.getJSON('sigmajs/wikiMinerApiProxy.php?q='+topic, function(terms, textStatus) {
         if(terms.errorCode == 1) {
           message('Geen resultaten voor deze zoekterm gevonden');
           $('#container').removeClass('csspinner').removeClass('traditional');
