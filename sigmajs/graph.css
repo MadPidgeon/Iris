@@ -9,6 +9,7 @@ body {
   background: #CCC;
   margin: 0 auto 0 auto;
   position: relative;
+  min-height: 80px;
 }
 
 #searchContainer #searchWrapper {
