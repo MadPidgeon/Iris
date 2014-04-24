@@ -58,21 +58,25 @@ function updateTwitter( search, number ) {
 		console.log( data );
 
 		if( "statuses" in data ) {
-			for( var i = 0; i < data.statuses.length; i += 1 ) {
-				addTweetDiv( data.statuses[i].user.name,
-					"https://twitter.com/" + data.statuses[i].user.screen_name,
-					data.statuses[i].text,
-					data.statuses[i].user.profile_image_url
-				);
+			if( data.statuses.length != 0 ) {
+				for( var i = 0; i < data.statuses.length; i += 1 ) {
+					addTweetDiv( data.statuses[i].user.name,
+						"https://twitter.com/" + data.statuses[i].user.screen_name,
+						data.statuses[i].text,
+						data.statuses[i].user.profile_image_url
+					);
+				}
+			} else {
+				addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "There are no tweets matching your query.", undefined );
 			}
 		} else {
-			addTweetDiv( "Error", "Illegal data!" );
+			addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "Twitter is tweeting us gibberish.", undefined );
 		}
 	}).fail(function(jqXHR, status, error) {
     	if( status == 'parseerror' ){
-        	addNewsDiv( "Error", "JSON parse error!" );
+        	addTweetDiv( "Error", "JSON parse error!" );
     	} else {
-        	addNewsDiv( "Error", "JQuery error!" );
+        	addTweetDiv( "Error", "JQuery error!" );
     	}
 	});
 }

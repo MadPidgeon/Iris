@@ -59,14 +59,18 @@ function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) 
 	$.getJSON( fetchUrl , function( data ) {
 		// Clean results
 		$("#newsContent").empty();
-		console.log( data );
 
 		// Handle fetched data
+		if( data.length != 0 ) {
 			for( i = 0; i < Math.min(numberOfResults, data.length); i += 1 ) {
 				addNewsDiv( data[i].title, data[i].short, data[i].image, data[i].date, 
 					data[i].wikiPortal, data[i].wikiCategory, data[i].newsCategory, 
 					data[i].website, data[i].webUrl, data[i].apiUrl, data[i].relevance );
 			}
+		} else {
+			addNewsDiv( "Whoops!", "There are no articles matching your query.", undefined, undefined, 
+				undefined, undefined, undefined, "News by Iris", "http://www.newsbyiris.com", undefined, undefined );
+		}
 
 		// Update colors
 		setColors( newColors );
@@ -79,10 +83,6 @@ function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) 
     	}
     	$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	});
-}
-
-function testNews() { 
-	updateNews( Array('Ukraine'), undefined, 40, Math.floor( Math.random() * 14 ) ); 
 }
 
 -->
