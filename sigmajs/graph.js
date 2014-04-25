@@ -297,6 +297,29 @@
     this.crumbs.push(topic);
   };
 
+  breadcrumbs.prototype.removeTillFit = function() {
+    var elements = $('.crumbs li a');
+    var i = $('.crumbs li a').length - 1;
+    console.log(elements);
+    var maximumwidth = $(window).width() * .68 * .55;
+    var width = 0;
+    while( i >= 0 && width < maximumwidth ) {
+      width += $(elements[i]).width() + 42;
+      console.log(width, maximumwidth, i);
+      --i;
+    }
+    if(width >= maximumwidth) {
+      this.crumbs.splice(0, i + 2);
+    }
+    
+    /*
+    for( var j = i; j >= 0; --j){
+      $(elements[i]).remove();
+    }
+    */
+
+  }
+
   breadcrumbs.prototype.removeFrom = function(from) {
     this.crumbs = this.crumbs.slice(0, from+1);
   };
@@ -383,7 +406,6 @@
     var screenSizeFactor = (1/1600)* $( window ).width();
     var results = Math.min(terms.length, numResults);
     for( var i = 0; i < results ; ++i ){
-      console.log(terms[i].title, terms[i].weight);
       s.graph.addNode({
         id: 'n'+terms[i].id,
         label: terms[i].title,
@@ -414,6 +436,8 @@
       if(e.data.node.type == 'rel'){
 
         c.add(e.data.node.label);
+        c.refresh();
+        c.removeTillFit();
         c.refresh();
         drawGraph(e.data.node.label);
       }
@@ -479,6 +503,8 @@
       c.clear();
       c.add(value);
       c.refresh();
+      c.removeTillFit();
+      c.refresh();
       drawGraph(value);
     }
       
@@ -527,6 +553,8 @@
 
     if(typeof getUrlVars().q != 'undefined'){
       c.add(getUrlVars().q);
+      c.refresh();
+      c.removeTillFit();
       c.refresh();
       drawGraph(getUrlVars().q);
     }
