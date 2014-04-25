@@ -12,6 +12,16 @@ body {
 	overflow-y: hidden;
 }
 
+#logo {
+	background: #BBB;
+    width: 140px;
+    padding: 0 0 0 0;
+    float: left;
+    height: 66px;
+    margin: 7px 0 0 10px;
+    text-align: center;
+}
+
 #news {
 	float: left;
 	height: 100%;
