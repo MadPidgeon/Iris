@@ -1,3 +1,10 @@
+
+
+/* Fonts */
+
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400,500);*/
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
 /* Base */
 body {
 	margin: 0 0 0 0;
@@ -66,7 +73,8 @@ body {
 	float: left;
 	width: 100%;
 	letter-spacing: 0px;
-	font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif";
+	/*font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif"*/
+	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: 18px;
 	font-weight: bold; 
 	padding: 0 0 0 0;
@@ -79,7 +87,8 @@ body {
 .newsShort {
 	float: left;
 	/*height: 68px;*/
-	font-family: "Arial", "sans-serif";
+	/*font-family: "Arial", "sans-serif";*/
+	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: 15px;
 	font-weight: normal;
 	word-wrap: break-word;
@@ -128,7 +137,8 @@ body {
 	float: left;
 	width: 100%;
 	padding: 4px 2px 4px 2px;
-	font-family: "Arial", "sans-serif";
+	font-family: 'Source Sans Pro', 'sans-serif';
+	/*font-family: "Arial", "sans-serif";*/
 	border-bottom: solid 1px #999999;
 	border-left: solid 1px #999999;
 	padding-left: 3px;
@@ -157,7 +167,8 @@ body {
 	float: left;
 	width: 100%;
 	letter-spacing: 0px;
-	font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif";
+	/*font-family: "Helvetica Narrow", "Arial Narrow", "Tahoma", "Verdana", "Arial", "sans-serif";*/
+	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: 18px;
 	font-weight: bold; 
 }
@@ -169,7 +180,8 @@ body {
 .twitterText {
 	float: left;
 	/*height: 68px;*/
-	font-family: "Arial", "sans-serif";
+	/*font-family: "Arial", "sans-serif";*/
+	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: 15px;
 	font-weight: normal;
 	word-wrap: break-word;

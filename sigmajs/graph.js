@@ -273,6 +273,7 @@
   sigma.settings.touchEnabled = false;
   sigma.settings.zoomMin = .5;
   sigma.settings.zoomMax = 1;
+  sigma.settings.font = 'Source Sans Pro';
 
   var breadcrumbs = function() {
     var crumbs, ul;
