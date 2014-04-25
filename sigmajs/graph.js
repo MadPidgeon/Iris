@@ -99,9 +99,11 @@
       if (typeof node.label !== 'string')
         return;
 
+      var screenSizeFactor = (1/1600)* $( window ).width();
+      
       fontSize = (settings('labelSize') === 'fixed') ?
         settings('defaultLabelSize') :
-        settings('labelSizeRatio') * size / 1.5;
+        settings('labelSizeRatio') * size / 1.5 * screenSizeFactor;
 
       context.font = (settings('fontStyle') ? settings('fontStyle') + ' ' : '') +
         (fontSize*2) + 'px ' + settings('font');
@@ -232,12 +234,14 @@
       ctx.fill();
       */
 
+      var screenSizeFactor = (1/1600)* $( window ).width();
+
       ctx.fillStyle = node.color || settings('defaultNodeColor');
       ctx.beginPath();
       ctx.arc(
         node[prefix + 'x'],
         node[prefix + 'y'],
-        node[prefix + 'size'],
+        node[prefix + 'size'] * screenSizeFactor,
         0,
         Math.PI * 2,
         true
@@ -376,14 +380,16 @@
   }
 
   function drawResults(terms) {
+    var screenSizeFactor = (1/1600)* $( window ).width();
     var results = Math.min(terms.length, numResults);
     for( var i = 0; i < results ; ++i ){
+      console.log(terms[i].title, terms[i].weight);
       s.graph.addNode({
         id: 'n'+terms[i].id,
         label: terms[i].title,
-        x: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.sin( 2 * Math.PI / results * i ),
-        y: (.5*((i+1)%2)+.2*(i%4==1)+.6) * Math.cos( 2 * Math.PI / results * i ),
-        size: terms[i].weight,
+        x: (1/screenSizeFactor)*(.55*((i+1)%2)+.2*(i%4==1)+.6) * Math.sin( 2 * Math.PI / results * i ),
+        y: (1/screenSizeFactor)*(.55*((i+1)%2)+.2*(i%4==1)+.6) * Math.cos( 2 * Math.PI / results * i ),
+        size: Math.max(terms[i].weight, 0.56),
         color: '#BBB',
         type: 'rel'
       })
