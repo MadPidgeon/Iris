@@ -3,7 +3,7 @@ include_once( "twitterRequest.php" );
 
 // Error function
 function fail( $str ) {
-	echo "FAIL: " . $str ;
+	echo "[{error: " . $str . "}]";
 	die();
 }
 
@@ -18,7 +18,7 @@ if( $parameter < 1 )
 $array = array();
 for( $i = 0; $i < $parameter; $i += 1 ) {
 	if( array_key_exists( "q" . $i, $_GET ) ) {
-		$array[] = $_GET[ "q" . $i ];
+		$array[] = urlencode( $_GET[ "q" . $i ] );
 	} else
 		fail( "Invalid number of parameters" );
 }

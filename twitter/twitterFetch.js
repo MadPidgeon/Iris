@@ -7,7 +7,7 @@
 }*/
 
 function tweetSpecialSplit( strin ) {
-	var index = strin.search( /[^\w\d_#@]/i );
+	var index = strin.search( /[^\w#@]/i );
 	if( index != -1 ) {
 		return [ strin.slice( 0, index ), strin.slice( index ) ];
 	} else
@@ -15,21 +15,29 @@ function tweetSpecialSplit( strin ) {
 }
 
 function tweetParse( strin ) {
-	var strarr = strin.split( " " );
 	var strout = "";
-	var splt;
-	for( var i = 0; i < strarr.length; i += 1 ) {
-		if( strarr[i].length > 0 ) {
-			if( strarr[i][0].search( /[^\w\d_]*@/i ) != -1 ) {
-				splt = tweetSpecialSplit( strarr[i] );
-				strout += "<b><a class=\"twitterHashtag\" target=\"_blank\" href=\"https://twitter.com/" + splt[0].slice(1) + "\">" + splt[0] + "</a></b>" + splt[1] + " ";
-			} else if( strarr[i][0].search( /[^\w\d_]*#/i ) != -1 ) {
-				splt = tweetSpecialSplit( strarr[i] );
-				strout += "<b><a class=\"twitterHandle\" target=\"_blank\" href=\"https://twitter.com/search?q=" + encodeURIComponent( splt[0] ) + "&src=tren\">" + splt[0] + "</a></b>" + splt[1] + " ";
-			} else if( strarr[i].indexOf( "://t.co" ) == -1 )
-				strout += strarr[i] + " ";
+	var last = 0;
+	var spec;
+
+	strin = strin.replace( /http.*?t\.co\/[\w]*/g, "LAWL" );
+	for( var i = 0; i < strin.length; i += 1 ) {
+		if( strin[i] == '#' || strin[i] == '@' ) {
+			strout += strin.substring( last, i );
+			last = i;
+			for( i += 1 ; i < strin.length; i += 1 ) {
+				if( /[\W]/.test( strin[i] ) )
+					break;
+			}
+			spec = strin.substring( last + 1, i );
+			if( strin[last] == '@' )
+				strout += "<b><a class=\"twitterHashtag\" target=\"_blank\" href=\"https://twitter.com/" + spec + "\">@" + spec + "</a></b>";
+			else
+				strout += "<b><a class=\"twitterHandle\" target=\"_blank\" href=\"https://twitter.com/search?q=" + encodeURIComponent( '#' + spec ) + "&src=tren\">#" + spec  + "</a></b>";
+			last = i;
 		}
 	}
+	strout += strin.substring( last, strin.length );
+
 	return strout;
 }
 
@@ -74,9 +82,9 @@ function updateTwitter( search, number ) {
 		}
 	}).fail(function(jqXHR, status, error) {
     	if( status == 'parseerror' ){
-        	addTweetDiv( "Error", "JSON parse error!" );
+        	addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "Twitter is tweeting us gibberish.", undefined );
     	} else {
-        	addTweetDiv( "Error", "JQuery error!" );
+        	addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "We encountered an unknown error.", undefined );
     	}
 	});
 }
