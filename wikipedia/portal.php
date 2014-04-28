@@ -9,11 +9,8 @@ function getPortal( $category ) {
 	$statement->execute();
 	$statement->bind_result( $id, $name );
 	$portal = new Portal;
-	if( $statement->fetch() ) {
-		$portal->index = $id;
-		$portal->name = $name;
-	} else {
-		$portal->index = 0;
+	if( !$statement->fetch() ) {
+		$index = 0;
 		$portal->name = "Unknown";
 	}
 	$statement->close();
