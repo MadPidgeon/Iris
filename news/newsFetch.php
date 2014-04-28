@@ -6,7 +6,7 @@ include_once( "newsRequest.php" );
 
 // Error function
 function fail( $str ) {
-	echo "FAIL: " . $str ;
+	echo "[{error: " . $str . "}]";
 	die();
 }
 

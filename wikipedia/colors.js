@@ -34,19 +34,31 @@ function hsvToRgb( h, s, v ) {
     }
 }
 
+var globalLightColor = "#444";
+var globalDarkColor = "#222";
+
 function setColors( index ) {
 	if( index == 0 ) {
-		color1t = "#000";
-        color2t = "#222";
-		color1b = "#CCC";
-	} else {
-		color1t = rgbToHex(hsvToRgb( index / 12, 1.0, 0.1 ));
-        color2t = rgbToHex(hsvToRgb( index / 12, 1.0, 0.2 ));
-		color1b = rgbToHex(hsvToRgb( index / 12, 0.5, 0.8 ));
-	}
-	$(".bgcolor1").css({ 'background-color' : color1b });
-    $(".txcolor1").css({ 'color' : color1t });
-    $(".txcolor2").css({ 'color' : color2t });
+        globalLightColor = "#444";
+        globalDarkColor = "#222";
+    } else {
+        globalLightColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.3 ));
+        globalDarkColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.1 ));
+    }
+    $(".txcolor1").css({ 'color' : globalLightColor });
+    $(".txcolor2").css({ 'color' : globalDarkColor });
+}
+
+function updateColors( topic ) {
+    var fetchUrl = "wikipedia/portalFetch.php?category=" + encodeURIComponent( topic ); 
+    
+    $.getJSON( fetchUrl , function( data ) {
+        console.log( data );
+    }).fail(function(jqXHR, status, error) {
+        setColors( 0 );
+    });
+
+    setColors( 1 );
 }
 
 -->

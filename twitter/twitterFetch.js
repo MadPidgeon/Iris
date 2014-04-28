@@ -1,11 +1,5 @@
 <!--
 
-/*function updateTwitter( search ) {
-	str = "<a class=\"twitter-timeline\" data-dnt=\"true\" href=\"https://twitter.com/search?q=" + search +  "\" data-widget-id=\"456834732156657664\">Tweets over \"@" + search +  "\"</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\"://platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>";
-	$("#twitterContent").empty();
-	$( str ).appendTo("#twitterContent");
-}*/
-
 function tweetSpecialSplit( strin ) {
 	var index = strin.search( /[^\w#@]/i );
 	if( index != -1 ) {
@@ -19,7 +13,7 @@ function tweetParse( strin ) {
 	var last = 0;
 	var spec;
 
-	strin = strin.replace( /http.*?t\.co\/[\w]*/g, "LAWL" );
+	strin = strin.replace( /http.*?t\.co\/[\w]*/g, "" );
 	for( var i = 0; i < strin.length; i += 1 ) {
 		if( strin[i] == '#' || strin[i] == '@' ) {
 			strout += strin.substring( last, i );
@@ -63,7 +57,6 @@ function updateTwitter( search, number ) {
 	$.getJSON( fetchUrl , function( data ) {
 		// Clean results
 		$("#twitterContent").empty();
-		console.log( data );
 
 		if( "statuses" in data ) {
 			if( data.statuses.length != 0 ) {
@@ -90,4 +83,3 @@ function updateTwitter( search, number ) {
 }
 
 -->
-

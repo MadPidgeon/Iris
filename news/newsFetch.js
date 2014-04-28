@@ -36,9 +36,8 @@ function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, news
 	$( divString ).appendTo( "#newsContent" );
 }
 
-function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) {
+function updateNews( searchNames, searchRelevance, numberOfResults ) {
 	$('#newsContent').addClass('csspinner').addClass('traditional');
-
 
 	// Validate input
 	if( numberOfResults == undefined )
@@ -72,14 +71,14 @@ function updateNews( searchNames, searchRelevance, numberOfResults, newColors ) 
 				undefined, undefined, undefined, "News by Iris", "http://www.newsbyiris.com", undefined, undefined );
 		}
 
-		// Update colors
-		setColors( newColors );
 		$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	}).fail(function(jqXHR, status, error) {
     	if(status == 'parseerror'){
-        	addNewsDiv( "Error", "JSON parse error!" );
+        	addNewsDiv( "Whoops!", "JSON Parse Error.", undefined, undefined, 
+				undefined, undefined, undefined, "News by Iris", "http://www.newsbyiris.com", undefined, undefined );
     	} else {
-        	addNewsDiv( "Error", "JQuery error!" );
+        	addNewsDiv( "Whoops!", "JQuery Error.", undefined, undefined, 
+				undefined, undefined, undefined, "News by Iris", "http://www.newsbyiris.com", undefined, undefined );
     	}
     	$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	});

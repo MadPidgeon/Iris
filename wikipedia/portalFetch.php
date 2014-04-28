@@ -1,12 +1,13 @@
 <?php
 
-include_once( "portal.php" );
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// change $_GET to $_POST
+include_once( "portal.php" );
 
 // Error function
 function fail( $str ) {
-	echo "FAIL: " . $str ;
+	echo "[{ error: " . $str . "}]";
 	die();
 }
 

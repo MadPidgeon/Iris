@@ -20,7 +20,7 @@ for( $i = 0; $i < $parameter; $i += 1 ) {
 	if( array_key_exists( "q" . $i, $_GET ) ) {
 		$array[] = urlencode( $_GET[ "q" . $i ] );
 	} else
-		fail( "Invalid number of parameters" );
+		fail( "Invalid number of parameters!" );
 }
 
 // Request data
