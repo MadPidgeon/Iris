@@ -53,11 +53,14 @@ function updateTwitter( search, number ) {
 		fetchUrl += "&q" + i + "=" + encodeURIComponent( search[i] );
 	}
 
+	// Clean results
+	$('#twitterContent').addClass('csspinner').addClass('traditional');
+	$("#twitterContent").empty();
+
 	// Get the JSON data
 	$.getJSON( fetchUrl , function( data ) {
-		// Clean results
-		$("#twitterContent").empty();
 
+		// Handle data
 		if( "statuses" in data ) {
 			if( data.statuses.length != 0 ) {
 				for( var i = 0; i < data.statuses.length; i += 1 ) {
@@ -73,12 +76,14 @@ function updateTwitter( search, number ) {
 		} else {
 			addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "Twitter is tweeting us gibberish.", undefined );
 		}
+		$('#twitterContent').removeClass('csspinner').removeClass('traditional');
 	}).fail(function(jqXHR, status, error) {
     	if( status == 'parseerror' ){
         	addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "Twitter is tweeting us gibberish.", undefined );
     	} else {
         	addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "We encountered an unknown error.", undefined );
     	}
+    	$('#twitterContent').removeClass('csspinner').removeClass('traditional');
 	});
 }
 

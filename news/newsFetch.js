@@ -9,6 +9,9 @@ function getTitleHeight( str ) {
 }
 
 function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, newsCategory, website, webUrl, apiUrl, relevance ) {
+	// Variables
+	var contentString, divSize, contentHeight, titleHeight;
+
 	// Generate content
 	if( website != undefined && website != "" )
 		contentString = "<a href=\"" + webUrl + "\" target=\"_blank\" ><b>" + website + "</b></a> ";
@@ -37,15 +40,13 @@ function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, news
 }
 
 function updateNews( searchNames, searchRelevance, numberOfResults ) {
-	$('#newsContent').addClass('csspinner').addClass('traditional');
-
 	// Validate input
 	if( numberOfResults == undefined )
 		numberOfResults = 10;
 
 	// Prepare fetch
-	numberOfParameters = searchNames.length;
-	fetchUrl = "news/newsFetch.php?num=" + numberOfResults + "&par=" + numberOfParameters;
+	var numberOfParameters = searchNames.length;
+	var fetchUrl = "news/newsFetch.php?num=" + numberOfResults + "&par=" + numberOfParameters;
 	for( i = 0; i < numberOfParameters; i += 1 ) {
 		fetchUrl += "&q" + i + "=" + encodeURIComponent( searchNames[i] ) + "&r" + i + "=";
 		if( searchRelevance == undefined || searchRelevance.length < i )
@@ -54,10 +55,12 @@ function updateNews( searchNames, searchRelevance, numberOfResults ) {
 			fetchUrl += searchRelevance[i];
 	}
 
+	// Clean results
+	$('#newsContent').addClass('csspinner').addClass('traditional');
+	$("#newsContent").empty();
+
 	// Fetch
 	$.getJSON( fetchUrl , function( data ) {
-		// Clean results
-		$("#newsContent").empty();
 
 		// Handle fetched data
 		if( data.length != 0 ) {
