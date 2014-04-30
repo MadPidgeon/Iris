@@ -87,7 +87,6 @@
     }
 
     sigma.canvas.hovers.rel = function(node, context, settings) {
-
     }
 
     sigma.canvas.labels.goo = function(node, context, settings) {
@@ -432,6 +431,20 @@
 
     // Finally, let's ask our sigma instance to refresh:
     s.refresh(); 
+
+    s.unbind('overNodes');
+    s.bind('overNodes', function(e) {
+      $('#container').css('cursor','pointer');
+    });
+
+    s.unbind('outNodes');
+    s.bind('outNodes', function(e) {
+      if(e.data.nodes.length <= 1 ){
+        $('#container').css('cursor','auto');
+      }
+    });
+    
+    
 
     s.unbind('clickNode');
 
