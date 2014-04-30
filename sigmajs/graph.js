@@ -1,6 +1,10 @@
 (function() {
   'use strict';
 
+  var mouseMoved = false;
+  var startX = 0;
+  var startY = 0;
+
   var numResults = 24;
     // Read a page's GET URL variables and return them as an associative array.
     function getUrlVars()
@@ -274,10 +278,11 @@
   sigma.settings.edgesPowRatio = 1;    
   //sigma.settings.autoRescale = false;
   sigma.settings.mouseEnabled = true;
-  sigma.settings.touchEnabled = false;
+  sigma.settings.touchEnabled = true;
   sigma.settings.zoomMin = .5;
   sigma.settings.zoomMax = 1;
   sigma.settings.font = 'Source Sans Pro';
+  console.log(sigma.settings);
 
   var breadcrumbs = function() {
     var crumbs, ul;
@@ -432,19 +437,23 @@
 
     // Bind the events:
     s.bind('clickNode', function(e) {
-      //console.log(e.data.node.label);
-      if(e.data.node.type == 'rel'){
-
-        c.add(e.data.node.label);
-        c.refresh();
-        c.removeTillFit();
-        c.refresh();
-        drawGraph(e.data.node.label);
+      if(!mouseMoved) {
+        if(e.data.node.type == 'rel'){
+          console.log(e);
+          c.add(e.data.node.label);
+          c.refresh();
+          c.removeTillFit();
+          c.refresh();
+          drawGraph(e.data.node.label);
+        }
+        else
+          window.open('http://en.wikipedia.org/wiki/'+e.data.node.label.replace(/\ /g,'_'));
       }
-      else
-        window.open('http://en.wikipedia.org/wiki/'+e.data.node.label.replace(/\ /g,'_'));
+      mouseMoved = false;
     });
 
+
+    
     h.add(s.graph.nodes());
 
     //console.log(s.graph.nodes());
@@ -550,6 +559,21 @@
         type: 'canvas'
       },
     });
+
+    $('#container').bind('mousedown', function(e) {
+      mouseMoved = false;
+      startX = e.pageX;
+      startY = e.pageY;
+
+    });
+
+    $('#container').bind('mouseup', function(e) {
+      mouseMoved = false;
+      if(e.pageX > startX + 5 || e.pageX < startX - 5 || e.pageY > startY + 5 || e.pageY < startY - 5) {
+        mouseMoved = true;
+      }
+    });
+
 
     if(typeof getUrlVars().q != 'undefined'){
       c.add(getUrlVars().q);
