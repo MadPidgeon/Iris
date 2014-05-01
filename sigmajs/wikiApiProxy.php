@@ -1,24 +1,18 @@
 <?php
-	ini_set('display_errors', 1);
 	class Term {
+		public $id;
 		public $title;
-		public $size;
+		public $weight;
 
-		function __construct($myTitle) {
+		function __construct($myTitle, $id) {
 			$this->title = $myTitle;
+			$this->weight = 0.75;
+			$this->id = $id;
 		}
 	}
 
-/*
-	 $ch = curl_init("http://en.wikipedia.org/w/api.php?action=query&titles=Dynamic_DNS&prop=links&format=json&pllimit=max");
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $output = curl_exec($ch);       
-    curl_close($ch);
-    echo $output;
-*/
     $topic = $_GET['q'];
+    $topic = str_replace(' ', '_', $topic);
 
 	$json =  file_get_contents("http://en.wikipedia.org/w/api.php?action=query&titles=".$topic."&prop=links&format=json&pllimit=max");
 	$json = json_decode($json);
@@ -35,11 +29,15 @@
 		&&  strpos($links[$i]->title, 'Help') === false 
 		&&  strpos($links[$i]->title, 'Template') === false 
 		&&  strpos($links[$i]->title, 'Portal') === false ) {
-			$term = new Term($links[$i]->title);
+			$term = new Term($links[$i]->title, $i);
 			array_push($terms, $term);
 		}
 	}
+
+	//var_dump(shuffle($terms));
+	shuffle($terms);
 	
+	/*
 	$count = count($terms);
 	$requests = ceil($count/50);
 	for( $i = 0; $i < $requests; ++$i) {
@@ -70,6 +68,13 @@
 			}
 		}
 	}
-	echo json_encode(array_values($terms));
+	*/
+	if(count($terms) == 0) {
+		$return = array( 'error' => 'No results',
+						'errorCode' => 001 );
+		echo json_encode($return);
+	}
+	else
+		echo json_encode(array_values($terms));
 
 ?>
