@@ -8,12 +8,18 @@ function getTitleHeight( str ) {
 	return $("#ttlLengthTest").html( str ).height();
 }
 
+var supportedImageFormats = [ ".jpg", ".jpeg", ".bmp", ".png", ".gif", ".tiff", ".xbm" ];
+
+function endsWith( str, suffix ) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, newsCategory, website, webUrl, apiUrl, relevance ) {
 	// Variables
 	var contentString, divSize, contentHeight, titleHeight;
 
 	// Generate content
-	if( website != undefined && website != "" )
+	if( website != undefined && website != "" && webUrl != undefined )
 		contentString = "<a href=\"" + webUrl + "\" target=\"_blank\" ><b>" + website + "</b></a> ";
 	if( content != undefined )
 		contentString += content;
@@ -27,13 +33,22 @@ function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, news
 
 	// Create divs
 	divString = "<div class=\" newsItem " + ( divSize ? "newsLarge" : "newsSmall"  ) + "\">";
-	divString += "<div class=\"txcolor1 newsTitle " + ( titleHeight > 20 ? "newsLarge" : "newsSmall" ) + "\">";
-	divString += "<a href=\""+webUrl+"\" target=\"_blank\" >";
-	divString += title;
-	divString += "</a>";
+	if( title !== undefined ) {
+		divString += "<div class=\"txcolor1 newsTitle " + ( titleHeight > 20 ? "newsLarge" : "newsSmall" ) + "\">";
+		divString += "<a href=\""+webUrl+"\" target=\"_blank\" >";
+		divString += title;
+		divString += "</a>";
+	}
 	divString += "</div><div class=\"txcolor2 newsShort\">";
-	if( image != undefined && image != "" )
-		divString += "<div class=\"newsImage\"><img src=\"" + encodeURI( image ) + "\" width=\"64\" height=\"64\"/></div>";
+	if( image != undefined && image != "" ) {
+		for( var i = 0; i < supportedImageFormats.length; ++i ) {
+			if( endsWith( image, supportedImageFormats[i] ) ) {
+				divString += "<div class=\"newsImage\"><img src=\"" + encodeURI( image ) + "\" width=\"64\" height=\"64\"/></div>";
+				break;
+			}
+		}
+	}
+		
 	divString += contentString;
 	divString += "</div></div>";
 	$( divString ).appendTo( "#newsContent" );
@@ -61,7 +76,7 @@ function updateNews( searchNames, searchRelevance, numberOfResults ) {
 
 	// Fetch
 	$.getJSON( fetchUrl , function( data ) {
-
+		console.log( data );
 		// Handle fetched data
 		if( data.length != 0 ) {
 			for( i = 0; i < Math.min(numberOfResults, data.length); i += 1 ) {

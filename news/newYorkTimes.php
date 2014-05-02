@@ -41,7 +41,10 @@ class newYorkTimesResult {
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
 		$result->newsCategory = mb_convert_encoding( $this->section_name, "HTML-ENTITIES", "UTF-8" );
-		$result->website = $this->source;
+		if( $this->source != NULL )
+			$result->website = $this->source;
+		else
+			$result->website = "The New York Times";
 		$result->webUrl = $this->web_url;
 		$result->apiUrl = NULL;
 		// temp
