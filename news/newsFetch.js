@@ -74,6 +74,9 @@ function updateNews( searchNames, searchRelevance, numberOfResults ) {
 				undefined, undefined, undefined, "News by Iris", "http://www.newsbyiris.com", undefined, undefined );
 		}
 
+		$(".txcolor2 a").css({ 'color' : globalLightColor });
+   		$(".txcolor1 a").css({ 'color' : globalDarkColor });
+
 		$('#newsContent').removeClass('csspinner').removeClass('traditional');
 	}).fail(function(jqXHR, status, error) {
     	if(status == 'parseerror'){

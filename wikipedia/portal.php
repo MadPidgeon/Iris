@@ -7,11 +7,10 @@ function getPortal( $category ) {
 	$statement = $mysqli->prepare( "SELECT P.id, P.title FROM wikiPortal P WHERE P.id IN ( SELECT C.portal FROM wikiCategory C WHERE C.name = ? )" );
 	$statement->bind_param("s", $category);
 	$statement->execute();
-	$statement->bind_result( $id, $name );
-	$portal = new Portal;
+	$statement->bind_result( $index, $name );
 	if( !$statement->fetch() ) {
-		$index = 0;
-		$portal->name = "Unknown";
+		$index = -1;
+		$name = "Unknown";
 	}
 	$statement->close();
 	$mysqli->close();

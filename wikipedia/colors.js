@@ -42,23 +42,45 @@ function setColors( index ) {
         globalLightColor = "#444";
         globalDarkColor = "#222";
     } else {
-        globalLightColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.3 ));
-        globalDarkColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.1 ));
+        globalLightColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.7 ));
+        globalDarkColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.5 ));
     }
-    $(".txcolor1").css({ 'color' : globalLightColor });
-    $(".txcolor2").css({ 'color' : globalDarkColor });
+    $(".txcolor2 a").css({ 'color' : globalLightColor });
+    $(".txcolor1 a").css({ 'color' : globalDarkColor });
 }
 
+var portalName;
+var portalIndex;
+
 function updateColors( topic ) {
-    var fetchUrl = "wikipedia/portalFetch.php?category=" + encodeURIComponent( topic ); 
-    
-    $.getJSON( fetchUrl , function( data ) {
-        console.log( data );
+    var fetchUrl1 = "sigmajs/getCategory.php?q=" + encodeURIComponent( topic );
+    portalName = "Unknown";
+    portalIndex = 0;
+    $.getJSON( fetchUrl1, function( data1 ) {
+        var stop = false;
+        for( var i = 0; i < data1.length; i++ ) {
+            var fetchUrl2 = "wikipedia/portalFetch.php?category=" + encodeURIComponent( data1[ i ] ); 
+            $.ajax({
+                url: fetchUrl2,
+                dataType: 'json',
+                async : false,
+                success : function( data2 ) {
+                    if( data2.index != -1 ) {
+                        portalName = data2.name;
+                        portalIndex = data2.index;
+                        setColors( portalIndex );
+                        stop = true;
+                    } 
+                }
+            });
+            if( stop )
+                break;
+        }
+        if( stop == false )
+            setColors( 0 );
     }).fail(function(jqXHR, status, error) {
         setColors( 0 );
     });
-
-    setColors( 1 );
 }
 
 -->

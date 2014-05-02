@@ -76,6 +76,8 @@ function updateTwitter( search, number ) {
 		} else {
 			addTweetDiv( "Whoops!", "http://www.newsbyiris.com", "Twitter is tweeting us gibberish.", undefined );
 		}
+		$(".txcolor2 a").css({ 'color' : globalLightColor });
+    	$(".txcolor1 a").css({ 'color' : globalDarkColor });
 		$('#twitterContent').removeClass('csspinner').removeClass('traditional');
 	}).fail(function(jqXHR, status, error) {
     	if( status == 'parseerror' ){
