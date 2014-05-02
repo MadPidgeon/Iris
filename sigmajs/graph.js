@@ -423,7 +423,7 @@
         id: 'e'+i,
         source: 'm',
         target: 'n'+terms[i].id,
-        color: '#00f',
+        color: globalLightColor,
         type: 'goo'
       });
 
