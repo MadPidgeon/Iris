@@ -59,13 +59,13 @@ function updateTwitter( search, number ) {
 
 	// Get the JSON data
 	$.getJSON( fetchUrl , function( data ) {
-
+		console.log( data );
 		// Handle data
 		if( "statuses" in data ) {
 			if( data.statuses.length != 0 ) {
 				for( var i = 0; i < data.statuses.length; i += 1 ) {
 					addTweetDiv( data.statuses[i].user.name,
-						"https://twitter.com/" + data.statuses[i].user.screen_name,
+						"https://twitter.com/" + data.statuses[i].user.screen_name + "/status/" + data.statuses[i].id_str,
 						data.statuses[i].text,
 						data.statuses[i].user.profile_image_url
 					);

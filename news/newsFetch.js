@@ -76,7 +76,6 @@ function updateNews( searchNames, searchRelevance, numberOfResults ) {
 
 	// Fetch
 	$.getJSON( fetchUrl , function( data ) {
-		console.log( data );
 		// Handle fetched data
 		if( data.length != 0 ) {
 			for( i = 0; i < Math.min(numberOfResults, data.length); i += 1 ) {
