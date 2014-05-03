@@ -52,35 +52,81 @@ function setColors( index ) {
 var portalName;
 var portalIndex;
 
-function updateColors( topic ) {
-    var fetchUrl1 = "sigmajs/getCategory.php?q=" + encodeURIComponent( topic );
-    portalName = "Unknown";
-    portalIndex = 0;
-    $.getJSON( fetchUrl1, function( data1 ) {
-        var stop = false;
-        for( var i = 0; i < data1.length; i++ ) {
-            var fetchUrl2 = "wikipedia/portalFetch.php?category=" + encodeURIComponent( data1[ i ] ); 
-            $.ajax({
-                url: fetchUrl2,
-                dataType: 'json',
-                async : false,
-                success : function( data2 ) {
-                    if( data2.index != -1 ) {
-                        portalName = data2.name;
-                        portalIndex = data2.index;
-                        setColors( portalIndex );
-                        stop = true;
-                    } 
-                }
-            });
-            if( stop )
-                break;
-        }
-        if( stop == false )
-            setColors( 0 );
-    }).fail(function(jqXHR, status, error) {
-        setColors( 0 );
+var Colorcache = function() {
+    var history;
+
+    Object.defineProperty(this, 'history', {
+      value: [],
+      writable: true
     });
+
+  }
+
+Colorcache.prototype.add = function(topic, portalNameLocal, portalIndexLocal) {
+    if(this.search(topic) === false) {
+      var item = {
+        'topic' : topic,
+        'portalName' : portalNameLocal,
+        'portalIndex' : portalIndexLocal
+      };
+      this.history.push(item);
+    }
+    
+  }
+
+Colorcache.prototype.search = function(topic){
+    for (var i = 0; i < this.history.length; i++) {
+      if(this.history[i].topic == topic)
+        return this.history[i];
+    };
+    return false;
+}
+
+CC = new Colorcache();
+
+function updateColors( topic ) {
+
+    var term = CC.search(topic);
+    if( term === false){
+        var fetchUrl1 = "sigmajs/getCategory.php?q=" + encodeURIComponent( topic );
+        portalName = "Unknown";
+        portalIndex = 0;
+        $.getJSON( fetchUrl1, function( data1 ) {
+            var stop = false;
+            for( var i = 0; i < data1.length; i++ ) {
+                var fetchUrl2 = "wikipedia/portalFetch.php?category=" + encodeURIComponent( data1[ i ] ); 
+                $.ajax({
+                    url: fetchUrl2,
+                    dataType: 'json',
+                    async : false,
+                    success : function( data2 ) {
+                        if( data2.index != -1 ) {
+                            portalName = data2.name;
+                            portalIndex = data2.index;
+                            setColors( portalIndex );
+                            stop = true;
+                        } 
+                    }
+                });
+                if( stop )
+                    break;   
+            }
+            if( stop == false )
+                setColors( 0 );
+            CC.add( topic, portalName, portalIndex);
+        }).fail(function(jqXHR, status, error) {
+            setColors( 0 );
+        });
+
+    }
+    else {
+        portalName = term.portalName;
+        portalIndex = term.portalIndex;
+        setColors( portalIndex );
+    }
+
+
+    
 }
 
 -->
