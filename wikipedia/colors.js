@@ -36,15 +36,25 @@ function hsvToRgb( h, s, v ) {
 
 var globalLightColor = "#444";
 var globalDarkColor = "#222";
+var globalCategoryColor = [ 
+    { l: '#C0C0C0', d: '#A0A0A0' },  
+    { l: '#C00000', d: '#A00000' },
+    { l: '#C0C000', d: '#A0A000' },
+    { l: '#00C000', d: '#00A000' },
+    { l: '#00C0C0', d: '#00A0A0' },
+    { l: '#0000C0', d: '#0000A0' },
+    { l: '#C000C0', d: '#A000A0' },
+    { l: '#C06060', d: '#A03030' },
+    { l: '#60C060', d: '#30A030' },
+    { l: '#6060C0', d: '#3030A0' },
+    { l: '#C0C060', d: '#A0A030' },
+    { l: '#60C0C0', d: '#30A0A0' },
+    { l: '#C060C0', d: '#A030A0' }
+]
 
 function setColors( index ) {
-	if( index == 0 ) {
-        globalLightColor = "#444";
-        globalDarkColor = "#222";
-    } else {
-        globalLightColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.7 ));
-        globalDarkColor = rgbToHex(hsvToRgb( index / 12, 1.0, 0.5 ));
-    }
+	globalLightColor = globalCategoryColor[ index ].l;
+    globalDarkColor = globalCategoryColor[ index ].d;
     $(".txcolor2 a").css({ 'color' : globalLightColor });
     $(".txcolor1 a").css({ 'color' : globalDarkColor });
 }
