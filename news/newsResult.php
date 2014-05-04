@@ -18,7 +18,7 @@ class newsResult {
 			'title' => $this->title,
 			'short' => $this->short,
 			'image' => $this->image,
-			'date' => $this->date,
+			'date' => date( 'Y-m-d H:i', $this->date ),
 			'wikiPortal' => $this->wikiPortal,
 			'wikiCategory' => $this->wikiCategory,
 			'newsCategory' => $this->newsCategory,
@@ -32,7 +32,7 @@ class newsResult {
 }
 
 function newsResultCompare( $a, $b ) {
-	return $a->relevance > $b->relevance;
+	return $a->relevance < $b->relevance;
 }
 
 ?>

@@ -54,15 +54,14 @@ class googleNewsResult {
 		$result->title = mb_convert_encoding( $this->title, "HTML-ENTITIES", "UTF-8" );
 		$result->short = mb_convert_encoding( $this->description, "HTML-ENTITIES", "UTF-8" );
 		$result->image = $this->image;
-		$result->date = $this->date;
+		$result->date = makeIRISDate( getGoogleDate( $this->date ) );
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
 		$result->newsCategory = NULL;
 		$result->website =  $this->site . " through Google News";
 		$result->webUrl = $this->url;
 		$result->apiUrl = NULL;
-		// temp
-		$result->relevance = rand(1,100);
+		$result->relevance = getGoogleDate( $this->date );
 		return $result;
 	}
 }

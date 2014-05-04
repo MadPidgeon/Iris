@@ -16,11 +16,14 @@ function endsWith( str, suffix ) {
 
 function addNewsDiv( title, content, image, date, wikiPortal, wikiCategory, newsCategory, website, webUrl, apiUrl, relevance ) {
 	// Variables
-	var contentString, divSize, contentHeight, titleHeight;
+	var contentString = "";
+	var divSize, contentHeight, titleHeight;
 
 	// Generate content
+	if( date != undefined ) 
+		contentString += "<small>" + date + "</small><br>";
 	if( website != undefined && website != "" && webUrl != undefined )
-		contentString = "<a href=\"" + webUrl + "\" target=\"_blank\" ><b>" + website + "</b></a> ";
+		contentString += "<a href=\"" + webUrl + "\" target=\"_blank\" ><b>" + website + "</b></a> ";
 	if( content != undefined )
 		contentString += content;
 

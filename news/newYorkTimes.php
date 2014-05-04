@@ -37,7 +37,7 @@ class newYorkTimesResult {
 		$result->short = mb_convert_encoding( $this->snippet, "HTML-ENTITIES", "UTF-8" );
 		if( $this->image !== NULL )
 			$result->image = "http://graphics.nytimes.com/" . $this->image;
-		$result->date = $this->date;
+		$result->date = makeIRISDate( getISODate( $this->date ) );
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
 		$result->newsCategory = mb_convert_encoding( $this->section_name, "HTML-ENTITIES", "UTF-8" );
@@ -47,19 +47,19 @@ class newYorkTimesResult {
 			$result->website = "The New York Times";
 		$result->webUrl = $this->web_url;
 		$result->apiUrl = NULL;
-		// temp
-		$result->relevance = rand(1,100);
+		$result->relevance = getISODate( $this->date );
 		return $result;
 	}
 }
 
 function newYorkTimesSearch( $requestObject ) {
 	$apiKey = "10be8996b9ceb01021004bd54c663ce5:4:68911726";
-	$requestUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" . urlencode( $requestObject->parameters[0]->string ) . "&api-key=" . $apiKey;
+	$requestUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" . urlencode( $requestObject->parameters[0]->string ) . "&api-key=" . $apiKey
+		. "&begin_date=" . date( "Ymd", time() - 4*604800 );
 	$json = getJson( $requestUrl );
 	$decoded = json_decode( $json, true );
 	$classArray = array();
-	foreach ( $decoded['response']['docs'] as $nytimesNews ) {
+	foreach ( $decoded['response']['docs'] as &$nytimesNews ) {
 		$nytimes = new newYorkTimesResult( $nytimesNews );
 		$classArray[] = $nytimes->castToNewsResult();
 	}

@@ -23,15 +23,14 @@ class usaTodayResult {
 		$result->title = mb_convert_encoding( $this->title, "HTML-ENTITIES", "UTF-8" );
 		$result->short = mb_convert_encoding( $this->description, "HTML-ENTITIES", "UTF-8" );
 		$result->image = NULL;
-		$result->date = $this->date;
+		$result->date = makeIRISDate( getUSADate( $this->date ) );
 		$result->wikiPortal = NULL;
 		$result->wikiCategory = NULL;
 		$result->newsCategory = NULL;
 		$result->website = "USA Today";
 		$result->webUrl = mb_convert_encoding( $this->webUrl, "HTML-ENTITIES", "UTF-8" );
 		$result->apiUrl = NULL;
-		// temp
-		$result->relevance = rand(1,100);
+		$result->relevance = getUSADate( $this->date );
 		return $result;
 	}
 }
@@ -46,7 +45,7 @@ function usaTodaySearch( $requestObject ) {
 	$classArray = array(); 
 	if( !is_array($decoded) or !array_key_exists( 'stories', $decoded ) )
 		return $classArray;
-	foreach ( $decoded['stories'] as $usaTodayNews ) {
+	foreach ( $decoded['stories'] as &$usaTodayNews ) {
 		$usaToday = new usaTodayResult( $usaTodayNews );
 		$classArray[] = $usaToday->castToNewsResult();
 	}

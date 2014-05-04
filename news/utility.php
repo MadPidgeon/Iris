@@ -11,4 +11,24 @@ function getJson( $url ) {
 	return $json;
 }
 
+function getGoogleDate( $dateStr ) {
+	return date_create_from_format( 'D, d M Y H:i:s e', $dateStr )->getTimestamp();
+}
+
+function getUSADate( $dateStr ) {
+	return date_create_from_format( 'D, j M Y H:i:s e', $dateStr )->getTimestamp();
+}
+
+function getISODate( $dateStr ) {
+	$myDate = date_create_from_format( 'Y-m-d*H:i:s*', $dateStr );
+	if( $myDate )
+		return $myDate->getTimestamp();
+	else
+		return 0;
+}
+
+function makeIRISDate( $timestamp ) {
+	return date( 'Y-m-d  H:i', $timestamp );
+}
+
 ?>
