@@ -5,11 +5,10 @@ body {
 
 #searchContainer {
   width: 100%;
-  height: 10%;
   background: #CCC;
   margin: 0 auto 0 auto;
   position: relative;
-  min-height: 80px;
+  height: 80px;
 }
 
 #searchContainer #searchWrapper {
@@ -53,6 +52,7 @@ body {
 #container {
   width: 100%;
   height: 90%;
+  height: calc(100% - 80px);
   position: relative;
   top: 0;
 }
