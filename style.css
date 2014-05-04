@@ -39,7 +39,6 @@ body {
 	float: left;
 	height: 100%;
 	width: 20%;
-	overflow-y: scroll;
 }
 
 #newsContent {
@@ -141,10 +140,22 @@ body {
 }
 
 /* Graph */
+#categoryDisplay {
+	height: 18px;
+}
 
 /* Twitter */
 #twitterContent {
 	height: 100%;
+	overflow-y: scroll;
+}
+
+#tweet {
+	padding: 6px 6px 6px 6px;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom: solid 1px #999999;
+	border-left: solid 1px #999999;
 }
 
 .twitterItem {
@@ -210,3 +221,4 @@ a.twitterHashtag {
 a.twitterHandle {
 	text-decoration: none;
 }
+
