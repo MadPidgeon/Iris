@@ -188,6 +188,10 @@ function updateColors( topic ) {
             }
             if( stop == false )
                 setColors( 0 );
+            $('#portalName a').html(portalName);    
+            $('#portalName a').attr({
+                href: 'http://en.wikipedia.org/wiki/Portal:Contents/'+portalName.replace(' ', '_')
+            });
             CC.add( topic, portalName, portalIndex);
         }).fail(function(jqXHR, status, error) {
             setColors( 0 );
@@ -198,6 +202,10 @@ function updateColors( topic ) {
         portalName = term.portalName;
         portalIndex = term.portalIndex;
         setColors( portalIndex );
+        $('#portalName a').html(portalName); 
+        $('#portalName a').attr({
+            href: 'http://en.wikipedia.org/wiki/Portal:Contents/'+portalName.replace(' ', '_')
+        });
     }
 
 

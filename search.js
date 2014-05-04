@@ -5,4 +5,5 @@ function searchAction( topic ) {
 	updateNews( data, undefined, 40 );
     updateTwitter( data, 10 );
     updateColors( topic );
+    $('#searchInput').select();
 }
