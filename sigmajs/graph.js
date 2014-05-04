@@ -281,6 +281,7 @@
   sigma.settings.zoomMin = .5;
   sigma.settings.zoomMax = 1;
   sigma.settings.font = 'Source Sans Pro';
+  sigma.settings.sideMargin = -.10;
   console.log(sigma.settings);
 
   var breadcrumbs = function() {
