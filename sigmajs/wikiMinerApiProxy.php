@@ -25,6 +25,11 @@ foreach ($categories as $keyA => $categorie) {
 		array_push($weights, $suggestion->weight);
 	}
 }
+$uncat_suggestion = $json->uncategorizedSuggestions;
+foreach ($uncat_suggestion as $keyB => $suggestion) {
+	array_push($suggestions, $suggestion);
+	array_push($weights, $suggestion->weight);
+}
 
 array_multisort($weights, SORT_DESC, SORT_NUMERIC , $suggestions);
 

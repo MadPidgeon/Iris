@@ -116,7 +116,7 @@
         (node.color || settings('defaultNodeColor')) :
         settings('defaultLabelColor');*/
 
-        wrapText(context, node.label, Math.round(node[prefix + 'x']), Math.round(node[prefix + 'y'] + fontSize / 3), 2*size, fontSize*2);
+        wrapText2(context, node.label, Math.round(node[prefix + 'x']), Math.round(node[prefix + 'y'] + fontSize / 3), 2*size, fontSize*2);
       context.textAlign = 'left';
 
     };
@@ -381,7 +381,7 @@
 
   cache.prototype.add = function(nodes) {
     if(this.search(nodes[0].label) === false) {
-        var item = {
+      var item = {
         'topic' : nodes[0].label,
         'nodes' : []
       };
