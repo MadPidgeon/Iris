@@ -9,6 +9,11 @@ function rgbToHex( color ) {
     return "#" + byteToHex( color.r ) + byteToHex( color.g ) + byteToHex( color.b );
 }
 
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
 function hsvToRgb( h, s, v ) {
     var r, g, b, i, f, p, q, t;
     if (h && s === undefined && v === undefined) {
@@ -34,6 +39,46 @@ function hsvToRgb( h, s, v ) {
     }
 }
 
+function rgbToHsv( red, green, blue ) {
+    var rr, gg, bb,
+        r = red / 255,
+        g = green / 255,
+        b = blue / 255,
+        h, s,
+        v = Math.max(r, g, b),
+        diff = v - Math.min(r, g, b),
+        diffc = function(c){
+            return (v - c) / 6 / diff + 1 / 2;
+        };
+
+    if (diff == 0) {
+        h = s = 0;
+    } else {
+        s = diff / v;
+        rr = diffc(r);
+        gg = diffc(g);
+        bb = diffc(b);
+
+        if (r === v) {
+            h = bb - gg;
+        }else if (g === v) {
+            h = (1 / 3) + rr - bb;
+        }else if (b === v) {
+            h = (2 / 3) + gg - rr;
+        }
+        if (h < 0) {
+            h += 1;
+        }else if (h > 1) {
+            h -= 1;
+        }
+    }
+    return {
+        h: h,
+        s: s,
+        v: v
+    };
+}
+
 var globalLightColor = "#444";
 var globalDarkColor = "#222";
 var globalCategoryColor = [ 
@@ -50,11 +95,31 @@ var globalCategoryColor = [
     { l: '#C0C060', d: '#A0A030' },
     { l: '#60C0C0', d: '#30A0A0' },
     { l: '#C060C0', d: '#A030A0' }
-]
+];
+
+var tempColor = [
+    "#303030",
+    "#344980",
+    "#e67e22",
+    "#1E824C",
+    "#e74c3c",
+    "#A14B17",
+    "#2ecc71",
+    "#1abc9c",
+    "#C9218A",
+    "#E08283",
+    "#9b59b6",
+    "#f1c40f",
+    "#3498db"
+];
 
 function setColors( index ) {
-	globalLightColor = globalCategoryColor[ index ].l;
-    globalDarkColor = globalCategoryColor[ index ].d;
+	globalLightColor = tempColor[ index ];
+    var hsv = rgbToHsv( hexToR( globalLightColor ), hexToG( globalLightColor ), hexToB( globalLightColor ) );
+    console.log( hsv );
+    globalDarkColor = rgbToHex( hsvToRgb( hsv.h, hsv.s, hsv.v-.3 ) );
+    //globalLightColor = globalCategoryColor[ index ].l;
+    //globalDarkColor = globalCategoryColor[ index ].d;
     $(".txcolor2 a").css({ 'color' : globalLightColor });
     $(".txcolor1 a").css({ 'color' : globalDarkColor });
 }
