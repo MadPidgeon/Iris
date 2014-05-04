@@ -147,6 +147,7 @@ body {
 /* Twitter */
 #twitterContent {
 	height: 100%;
+	height: calc(100% - 41px);
 	overflow-y: scroll;
 }
 
