@@ -212,19 +212,19 @@ $(document).ready(function($) {
 
   var terms = [];
 
-  terms.push({x: 2, y: 6, c: '#1abc9c' }); //0
-  terms.push({x: 2, y: 2, c: '#2ecc71' }); //1
-  terms.push({x: 4, y: 6, c: '#3498db' }); //2
-  terms.push({x: 4, y: 4, c: '#9b59b6' }); //3
-  terms.push({x: 4, y: 2, c: '#344980' }); //4
-  terms.push({x: 6, y: 6, c: '#C9218A' }); //5
-  terms.push({x: 6, y: 2, c: '#e67e22' }); //6
-  terms.push({x: 8, y: 6, c: '#e74c3c' }); //7
-  terms.push({x: 8, y: 2, c: '#E08283' }); //8
-  terms.push({x: 12, y: 2, c: '#1E824C' }); //9
-  terms.push({x: 10, y: 3.5, c: '#f1c40f' }); //10
-  terms.push({x: 12, y: 4.5, c: '#333' }); //11
-  terms.push({x: 10, y: 6, c: '#A14B17' }); //12
+  terms.push({x: 2, y: 6, c: '#1abc9c' }); //0 Turqoise
+  terms.push({x: 2, y: 2, c: '#2ecc71' }); //1 Lichtgroen
+  terms.push({x: 4, y: 6, c: '#3498db' }); //2 Lichtblauw
+  terms.push({x: 4, y: 4, c: '#9b59b6' }); //3 Paars
+  terms.push({x: 4, y: 2, c: '#344980' }); //4 Donkerblauw
+  terms.push({x: 6, y: 6, c: '#C9218A' }); //5 Magenta
+  terms.push({x: 6, y: 2, c: '#e67e22' }); //6 Oranje
+  terms.push({x: 8, y: 6, c: '#e74c3c' }); //7 Rood
+  terms.push({x: 8, y: 2, c: '#E08283' }); //8 Roze
+  terms.push({x: 12, y: 2, c: '#1E824C' }); //9 Donkergroen
+  terms.push({x: 10, y: 3.5, c: '#f1c40f' }); //10 Geel
+  terms.push({x: 12, y: 4.5, c: '#333' }); //11 Zwart
+  terms.push({x: 10, y: 6, c: '#A14B17' }); //12 Bruin
 
   var edges = [];
 

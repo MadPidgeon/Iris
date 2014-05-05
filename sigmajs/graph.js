@@ -339,13 +339,13 @@
     $(this.ul).children().remove();
     if( a > 0 ){
       $(this.ul).append(function() {
-        var $new = $('<li class="first"><a href="#" style="z-index:100;"><span></span>'+_self.crumbs[0]+'</a></li>');
+        var $new = $('<li class="first"><a href="" style="z-index:100;"><span></span>'+_self.crumbs[0]+'</a></li>');
         $new.click({'index': 0, '_self' : _self }, _self.click);
         return $new;
       });
       for( var i = 1; i < a; i++){
         $(this.ul).append(function(){
-          return $('<li><a href="#" style="z-index:'+(100-i)+';"><span></span>'+_self.crumbs[i]+'</a></li>').click({'index': i, '_self' : _self }, _self.click);
+          return $('<li><a href="" style="z-index:'+(100-i)+';"><span></span>'+_self.crumbs[i]+'</a></li>').click({'index': i, '_self' : _self }, _self.click);
         });
       }
     }
