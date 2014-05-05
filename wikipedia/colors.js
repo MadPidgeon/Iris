@@ -117,7 +117,7 @@ function setColors( index ) {
 	globalLightColor = tempColor[ index ];
     var hsv = rgbToHsv( hexToR( globalLightColor ), hexToG( globalLightColor ), hexToB( globalLightColor ) );
     console.log( hsv );
-    globalDarkColor = rgbToHex( hsvToRgb( hsv.h, hsv.s, hsv.v-.3 ) );
+    globalDarkColor = rgbToHex( hsvToRgb( hsv.h, hsv.s, Math.max(hsv.v-.3, 0 ) ) );
     //globalLightColor = globalCategoryColor[ index ].l;
     //globalDarkColor = globalCategoryColor[ index ].d;
     $(".txcolor2 a").css({ 'color' : globalLightColor });
