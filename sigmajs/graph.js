@@ -368,6 +368,7 @@
       drawGraph( value );
       _self.refresh();
     }
+    return false;
   }
 
   var cache = function() {
